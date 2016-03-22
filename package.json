@@ -1,0 +1,22 @@
+{
+  "name": "efficiently",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davherrmann/efficiently.git"
+  },
+  "author": "David Herrmann",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/davherrmann/efficiently/issues"
+  },
+  "homepage": "https://github.com/davherrmann/efficiently#readme",
+  "dependencies": {
+    "react": "^0.14.7"
+  }
+}
