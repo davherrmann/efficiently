@@ -11,3 +11,16 @@ export function deleteTodo(index) {
     index
   }
 }
+
+export function applyStateFromServer(state) {
+  return {
+    type: 'applyStateFromServer',
+    state
+  }
+}
+
+export function initState() {
+  return {
+    type: 'initState'
+  }
+}
