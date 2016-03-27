@@ -24,3 +24,10 @@ export function initState() {
     type: 'initState'
   }
 }
+
+export function ewbAction(action) {
+  return {
+    type: 'ewbAction',
+    action
+  }
+}
