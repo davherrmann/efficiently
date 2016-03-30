@@ -5,7 +5,7 @@ import {Input} from 'react-bootstrap';
 const Field = React.createClass({
   render() {
     return (
-      <Input standalone {...this.props} hasFeedback />
+      <Input standalone {...this.props} hasFeedback/>
     )
   }
 });
