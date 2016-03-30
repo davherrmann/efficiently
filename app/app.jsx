@@ -1,9 +1,12 @@
+import React from 'react';
 import {connect} from 'react-redux';
 
-import React from 'react';
-import Ewb from './ewb';
+// framework components
+import Ewb from '../components/ewb';
+import Field from '../components/field';
+
+// my components
 import Form from './form';
-import Field from './field';
 
 import {ewbAction} from '../actions';
 
