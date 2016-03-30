@@ -31,3 +31,7 @@ export function ewbAction(action) {
     action
   }
 }
+
+export function server(action) {
+  return Object.assign({sendToServer: true}, action);
+}

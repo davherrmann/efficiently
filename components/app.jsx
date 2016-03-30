@@ -10,11 +10,11 @@ import Form from './form';
 import Frame from './frame';
 
 // actions
-import {initState} from '../actions';
+import {server, initState} from '../actions';
 
 let reactElement = document.getElementById('react');
 
-store.dispatch(initState());
+store.dispatch(server(initState()));
 
 render(
   <Provider store={store}>

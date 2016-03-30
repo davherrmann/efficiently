@@ -1,22 +1,19 @@
-const initialState = {
+import Immutable from 'seamless-immutable';
+
+const initialState = Immutable({
   ewb: {
     actions: ["print", "close", "save"],
     title: "MyEWB"
   },
-  form: "test"
-}
+  // form may be reserved for redux-form!
+  //form: "test"
+})
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case "ewbAction":
       // return a new object! otherwise store will not notify subscribers!
-      return {
-        ewb: {
-          actions: ["close", "save"],
-          title: "MyEWB - changed"
-        },
-        form: "test"
-      };
+      return state.setIn(['ewb', 'actions'], ["close", "save"]);
     default:
       return state;
   }
