@@ -4,10 +4,7 @@ import {Provider} from 'react-redux';
 import store from '../store';
 
 // components
-import Todos from './todos';
-import Ewb from './ewb';
-import Form from './form';
-import Frame from './frame';
+import App from '../app/app';
 
 // actions
 import {server, initState} from '../actions';
@@ -18,7 +15,7 @@ store.dispatch(server(initState()));
 
 render(
   <Provider store={store}>
-    <Frame></Frame>
+    <App></App>
   </Provider>,
   reactElement
 );
