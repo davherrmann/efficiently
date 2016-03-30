@@ -7,6 +7,7 @@ import store from '../store';
 import Todos from './todos';
 import Ewb from './ewb';
 import Form from './form';
+import Frame from './frame';
 
 // actions
 import {initState} from '../actions';
@@ -17,13 +18,7 @@ store.dispatch(initState());
 
 render(
   <Provider store={store}>
-    <Ewb actions={["print", "close", "save"]} title="MyEWB">
-      <h1>Test</h1>
-      <Form>
-        <y-field model={{}}/>
-        <Todos />
-      </Form>
-    </Ewb>
+    <Frame></Frame>
   </Provider>,
   reactElement
 );

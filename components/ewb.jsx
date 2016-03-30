@@ -13,8 +13,8 @@ const Ewb = ({dispatch, children, actions, title}) => (
       </Navbar.Header>
       <Navbar.Collapse>
         <Navbar.Form pullRight>
-          {actions.map(action => (
-            <Button onClick={() => dispatch(ewbAction(action))} bsStyle="primary">{action}</Button>
+          {actions.map((action, index) => (
+            <Button key={index} onClick={() => dispatch(ewbAction(action))} bsStyle="primary">{action}</Button>
           ))}
         </Navbar.Form>
       </Navbar.Collapse>

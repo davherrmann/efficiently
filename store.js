@@ -1,5 +1,6 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import todos from './reducers/todos';
+import myReducer from './reducers/myServerSideReducer';
 import applyNewState from './reducers/applyNewState';
 import {applyStateFromServer} from './actions';
 
@@ -15,13 +16,12 @@ const serverDispatch = store => next => action => {
 }
 
 const clientStore = createStore(
-  combineReducers({applyNewState}),
+  applyNewState,
   applyMiddleware(serverDispatch)
 );
 
 const serverStore = createStore(
-  combineReducers({todos: todos}),
-  {}
+  myReducer
 )
 
 clientStore.subscribe(() => {
