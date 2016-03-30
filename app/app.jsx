@@ -3,8 +3,7 @@ import {connect} from 'react-redux';
 import Immutable from 'seamless-immutable';
 
 // framework components
-import Ewb from '../components/ewb';
-import Field from '../components/field';
+import {Ewb, Field} from '../components';
 
 // my components
 import Form from './form';
