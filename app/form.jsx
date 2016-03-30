@@ -26,7 +26,6 @@ class Form extends Component {
         <FormGroup>
           <Field labelClassName="col-xs-2" wrapperClassName="col-xs-4" label="Email" type="text" placeholder="Email" {...email}></Field>
         </FormGroup>
-        <Button type="submit" bsStyle="danger">Submit</Button>
       </form>
     );
   }
