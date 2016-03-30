@@ -5,6 +5,9 @@ import applyNewState from './reducers/applyNewState';
 import {applyStateFromServer} from './actions';
 import Immutable from 'seamless-immutable';
 import {reducer as formReducer} from 'redux-form';
+import createLogger from 'redux-logger';
+
+const logger = createLogger();
 
 const serverDispatch = store => next => action => {
   if (action.sendToServer !== true) {
@@ -28,16 +31,12 @@ const clientReducers = (state = {}, action) => {
 
 const clientStore = createStore(
   clientReducers,
-  applyMiddleware(serverDispatch)
+  applyMiddleware(serverDispatch, logger)
 );
 
 const serverStore = createStore(
   myReducer
 )
-
-clientStore.subscribe(() => {
-  console.log("new client state: " + JSON.stringify(clientStore.getState()));
-});
 
 serverStore.subscribe(() => {
   console.log("new state from server arrived on client side: " + JSON.stringify(serverStore.getState()));
