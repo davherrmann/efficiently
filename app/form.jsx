@@ -20,7 +20,7 @@ class Form extends Component {
     return (
       <form onSubmit={handleSubmit} className="form-horizontal">
         <FormGroup>
-          <Field bsStyle={firstName.touched && firstName.error ? "error" : ""} labelClassName="col-xs-2" wrapperClassName="col-xs-4" label="First Name" type="text" placeholder="First Name" {...firstName}></Field>
+          <Field bsStyle={firstName.touched && firstName.error ? "error" : null} labelClassName="col-xs-2" wrapperClassName="col-xs-4" label="First Name" type="text" placeholder="First Name" {...firstName}></Field>
           <Field labelClassName="col-xs-2" wrapperClassName="col-xs-4" label="Last Name" type="text" placeholder="Last Name" {...lastName}></Field>
         </FormGroup>
         <FormGroup>
