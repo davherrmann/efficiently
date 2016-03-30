@@ -1,5 +1,4 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux';
-import todos from './reducers/todos';
 import myReducer from './reducers/myServerSideReducer';
 import reduceForm from './reducers/reduceForm';
 import applyNewState from './reducers/applyNewState';
