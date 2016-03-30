@@ -23,7 +23,9 @@ class Form extends Component {
           <Field labelClassName="col-xs-2" wrapperClassName="col-xs-4" label="First Name" type="text" placeholder="First Name" {...firstName}></Field>
           <Field labelClassName="col-xs-2" wrapperClassName="col-xs-4" label="Last Name" type="text" placeholder="Last Name" {...lastName}></Field>
         </FormGroup>
-        <Field labelClassName="col-xs-2" wrapperClassName="col-xs-4" label="Email" type="text" placeholder="Email" {...email}></Field>
+        <FormGroup>
+          <Field labelClassName="col-xs-2" wrapperClassName="col-xs-4" label="Email" type="text" placeholder="Email" {...email}></Field>
+        </FormGroup>
         <Button type="submit" bsStyle="danger">Submit</Button>
       </form>
     );
