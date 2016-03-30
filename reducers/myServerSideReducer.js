@@ -1,6 +1,7 @@
 const initialState = {
   ewb: {
-    actions: ["print", "close", "save"]
+    actions: ["print", "close", "save"],
+    title: "MyEWB"
   },
   form: "test"
 }
@@ -11,7 +12,8 @@ export default (state = initialState, action) => {
       // return a new object! otherwise store will not notify subscribers!
       return {
         ewb: {
-          actions: ["close", "save"]
+          actions: ["close", "save"],
+          title: "MyEWB - changed"
         },
         form: "test"
       };
