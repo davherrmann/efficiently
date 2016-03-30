@@ -34,12 +34,9 @@ const clientStore = createStore(
   applyMiddleware(serverDispatch, logger)
 );
 
-const serverStore = createStore(
-  myReducer
-)
+const serverStore = createStore(myReducer);
 
 serverStore.subscribe(() => {
-  console.log("new state from server arrived on client side: " + JSON.stringify(serverStore.getState()));
   clientStore.dispatch(applyStateFromServer(serverStore.getState()));
 });
 
