@@ -12,18 +12,16 @@ import Form from './form';
 // actions
 import {ewbAction, tryCloseEwb, closeEwb, server, submit, dialogAction} from '../actions';
 
-const initialClientState = {
-  ewb: {
-    actions: ["print"]
-  },
-  wantToClose: false
-};
-
 class Frame extends Component {
   render() {
-    const {ewb = initialClientState.ewb, wantToClose = initialClientState.wantToClose, dispatch} = this.props;
+    const {state, dispatch} = this.props;
+    if (!state.ready) {
+      return (
+        <div className="loading"></div>
+      )
+    }
     return (
-      <Ewb actions={ewb.actions} title={ewb.title} onSubmit={() => this.refs.form.submit()}>
+      <Ewb actions={state.ewb.actions} title={state.ewb.title} onSubmit={() => this.refs.form.submit()}>
         <h1>Test</h1>
         <Form
           ref="form"
@@ -32,7 +30,7 @@ class Frame extends Component {
         <Dialog
           title="Super major feedback question"
           actions={[dialogAction('reallyClose', 'Yes, CLOSE the thing!')]}
-          hidden={!wantToClose}>
+          hidden={!state.wantToClose}>
           Do you really want to close?
         </Dialog>
       </Ewb>
@@ -41,7 +39,4 @@ class Frame extends Component {
 }
 
 // avoid state => state, use well-defined state acccess apis in subcomponents?
-export default connect(state => ({
-  ewb: state.ewb,
-  wantToClose: state.wantToClose
-}))(Frame);
+export default connect(state => ({state}))(Frame);
