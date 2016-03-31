@@ -1,4 +1,5 @@
 import React from 'react';
+import component from '../framework/component';
 
 // framework components
 import {Ewb, Field, Dialog} from '../components';
@@ -6,9 +7,6 @@ import {Button, Modal} from 'react-bootstrap';
 
 // my components
 import Form from './form';
-import Test from './test';
-
-import component from '../framework/component';
 
 // actions
 import {server, submit, dialogAction} from '../actions';
@@ -26,6 +24,5 @@ export default component((state, dispatch) => (
       hidden={!state.wantToClose}>
       Do you really want to close?
     </Dialog>
-    <Test></Test>
   </Ewb>
 ));
