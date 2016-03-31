@@ -25,8 +25,14 @@ class Frame extends Component {
     return (
       <Ewb actions={ewb.actions} title={ewb.title} onSubmit={() => this.refs.form.submit()}>
         <h1>Test</h1>
-        <Form ref="form" onSubmit={data => dispatch(server(submit()))}></Form>
-        <Dialog title="Super major feedback question" hidden={!wantToClose} actions={[dialogAction('reallyClose', 'Yes, CLOSE the thing!')]}>
+        <Form
+          ref="form"
+          onSubmit={data => dispatch(server(submit()))}>
+        </Form>
+        <Dialog
+          title="Super major feedback question"
+          actions={[dialogAction('reallyClose', 'Yes, CLOSE the thing!')]}
+          hidden={!wantToClose}>
           Do you really want to close?
         </Dialog>
       </Ewb>
