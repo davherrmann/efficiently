@@ -23,9 +23,9 @@ class Frame extends Component {
   render() {
     const {ewb = initialClientState.ewb, wantToClose = initialClientState.wantToClose, dispatch} = this.props;
     return (
-      <Ewb actions={ewb.actions} title={ewb.title} onSubmit={() => this._form.submit()}>
+      <Ewb actions={ewb.actions} title={ewb.title} onSubmit={() => this.refs.form.submit()}>
         <h1>Test</h1>
-        <Form ref={(c) => this._form = c} onSubmit={data => dispatch(server(submit()))}></Form>
+        <Form ref="form" onSubmit={data => dispatch(server(submit()))}></Form>
         <Dialog hidden={!wantToClose} onClick={() => dispatch(server(closeEwb())) } />
       </Ewb>
     );
