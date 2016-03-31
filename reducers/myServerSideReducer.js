@@ -15,6 +15,9 @@ export default (state = initialState, action) => {
       if (action.action === 'close') {
         return state.set('wantToClose', true);
       }
+      if (action.action === 'save') {
+        return state.setIn(['ewb', 'actions'], ["print", "close"]);
+      }
       return state;
 
     case "tryClose":
@@ -23,8 +26,8 @@ export default (state = initialState, action) => {
     case "close":
       return state.set("wantToClose", false);
 
-    case "dialogResult":
-      if (action.action === 'reallyClose') {
+    case "dialogAction":
+      if (action.actionId === 'reallyClose') {
         return state.set("wantToClose", false);
       }
       return state;

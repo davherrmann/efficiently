@@ -46,3 +46,11 @@ export function dialogResult(action) {
     action
   }
 }
+
+export function dialogAction(actionId, actionName) {
+  return {
+    type: 'dialogAction',
+    actionId,
+    actionName
+  }
+}
