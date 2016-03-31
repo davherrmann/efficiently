@@ -9,6 +9,12 @@ const initialState = Immutable({
 })
 
 export default (state = initialState, action) => {
+
+  // debug state - super simple
+  /* if (true) {
+    return debugState;
+  } */
+
   switch (action.type) {
     case "ewbAction":
       // return a new object! otherwise store will not notify subscribers!
