@@ -10,7 +10,7 @@ import {Button, Modal} from 'react-bootstrap';
 import Form from './form';
 
 // actions
-import {ewbAction, tryCloseEwb, closeEwb, server, submit, dialogAction} from '../actions';
+import * as actions from '../actions';
 
 class Frame extends Component {
   render() {
@@ -25,11 +25,11 @@ class Frame extends Component {
         <h1>Test</h1>
         <Form
           ref="form"
-          onSubmit={data => dispatch(server(submit()))}>
+          onSubmit={data => dispatch(actions.server(actions.submit()))}>
         </Form>
         <Dialog
           title="Super major feedback question"
-          actions={[dialogAction('reallyClose', 'Yes, CLOSE the thing!')]}
+          actions={[actions.dialogAction('reallyClose', 'Yes, CLOSE the thing!')]}
           hidden={!state.wantToClose}>
           Do you really want to close?
         </Dialog>
