@@ -8,39 +8,25 @@ import {Button, Modal} from 'react-bootstrap';
 
 // my components
 import Form from './form';
+import Dialog from './dialog';
 
-import {ewbAction, trySubmit, server, submit} from '../actions';
+import {ewbAction, tryCloseEwb, closeEwb, server, submit} from '../actions';
 
 const initialClientState = {
   ewb: {
     actions: ["print"]
   },
-  wantToSubmit: false
+  wantToClose: false
 };
 
 class Frame extends Component {
   render() {
-    const {ewb = initialClientState.ewb, wantToSubmit = initialClientState.wantToSubmit, dispatch} = this.props;
+    const {ewb = initialClientState.ewb, wantToClose = initialClientState.wantToClose, dispatch} = this.props;
     return (
-      <Ewb actions={ewb.actions} title={ewb.title} onSubmit={() => dispatch(server(trySubmit()))}>
+      <Ewb actions={ewb.actions} title={ewb.title} onSubmit={() => this._form.submit()}>
         <h1>Test</h1>
         <Form ref={(c) => this._form = c} onSubmit={data => dispatch(server(submit()))}></Form>
-        <div hidden={!wantToSubmit}>
-          <Modal.Dialog>
-            <Modal.Header>
-              <Modal.Title>Super minor feedback question</Modal.Title>
-            </Modal.Header>
-
-            <Modal.Body>
-              Do you really want to submit?
-            </Modal.Body>
-
-            <Modal.Footer>
-              <Button bsStyle="primary" onClick={() => this._form.submit()}>Really submit</Button>
-            </Modal.Footer>
-
-          </Modal.Dialog>
-        </div>
+        <Dialog hidden={!wantToClose} onClick={() => dispatch(server(closeEwb())) } />
       </Ewb>
     );
   }
@@ -49,5 +35,5 @@ class Frame extends Component {
 // avoid state => state, use well-defined state acccess apis in subcomponents?
 export default connect(state => ({
   ewb: state.ewb,
-  wantToSubmit: state.wantToSubmit
+  wantToClose: state.wantToClose
 }))(Frame);

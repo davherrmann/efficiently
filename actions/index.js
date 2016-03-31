@@ -22,14 +22,27 @@ export function server(action) {
   return Object.assign({sendToServer: true}, action);
 }
 
-export function trySubmit() {
+export function tryCloseEwb() {
   return {
-    type: 'trySubmit'
+    type: 'tryClose'
   }
 }
 
 export function submit() {
   return {
     type: 'submit'
+  }
+}
+
+export function closeEwb() {
+  return {
+    type: 'close'
+  }
+}
+
+export function dialogResult(action) {
+  return {
+    type: 'dialogResult',
+    action
   }
 }
