@@ -1,11 +1,28 @@
 var path = require("path");
+var webpack = require("webpack");
+
 module.exports = {
-  entry: './framework/root.jsx',
+  entry: {
+    app: './framework/root.jsx',
+    vendor: [
+      'react',
+      'react-bootstrap',
+      'react-redux',
+      'redux',
+      'immutable',
+      'redux-form',
+      'redux-logger',
+      'seamless-immutable',
+    ]
+  },
   output: {
     path: path.resolve(__dirname, "build"),
     publicPath: "/",
     filename: "bundle.js"
   },
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin(/* chunkName= */"vendor", /* filename= */"vendor.bundle.js")
+  ],
   module: {
     loaders: [
       {
