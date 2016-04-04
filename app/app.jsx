@@ -1,11 +1,8 @@
 import React from 'react';
 import {component} from 'efficiently/core';
 
-// framework components
-import {Ewb, Field, Dialog} from 'efficiently/components';
-import {Button, Modal} from 'react-bootstrap';
-
-// my components
+// components: framwork + custom
+import {Ewb, Field, Dialog, Button, Modal} from 'efficiently/components';
 import Form from './form';
 
 // actions

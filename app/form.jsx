@@ -3,8 +3,7 @@ import {connect} from 'react-redux';
 import {reduxForm} from 'redux-form';
 
 // components
-import {Field, FormGroup} from 'efficiently/components';
-import {Button} from 'react-bootstrap';
+import {Field, FormGroup, Button} from 'efficiently/components';
 
 const validate = values => {
   const errors = {};
