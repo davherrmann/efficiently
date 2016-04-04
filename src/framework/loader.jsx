@@ -1,12 +1,9 @@
-import React from 'react';
+import React, {createElement} from 'react';
 import {connect} from 'react-redux';
 
-// components
-import App from '../app/app';
-
-const Loader = ({state}) => {
+const Loader = ({state, contentComponent}) => {
   if (state.ready) {
-    return <App></App>
+    return createElement(contentComponent);
   } else {
     return <div className="loading">Loaaaaaddding...</div>
   }

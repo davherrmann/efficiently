@@ -1,28 +1,21 @@
 var path = require("path");
 var webpack = require("webpack");
+var merge = require('webpack-merge');
 
-module.exports = {
+var libraryName = "efficiently";
+
+const TARGET = process.env.npm_lifecycle_event;
+console.log("target event is " + TARGET);
+
+var common = {
   entry: {
-    app: './framework/root.jsx',
-    vendor: [
-      'react',
-      'react-bootstrap',
-      'react-redux',
-      'redux',
-      'immutable',
-      'redux-form',
-      'redux-logger',
-      'seamless-immutable',
-    ]
+    app: './index.js',
   },
   output: {
     path: path.resolve(__dirname, "build"),
     publicPath: "/",
     filename: "bundle.js"
   },
-  plugins: [
-    new webpack.optimize.CommonsChunkPlugin(/* chunkName= */"vendor", /* filename= */"vendor.bundle.js")
-  ],
   module: {
     loaders: [
       {
@@ -38,4 +31,37 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.jsx']
   }
+}
+
+if (TARGET === 'start') {
+  module.exports = merge(common, {
+    devtool: 'eval-source-map',
+  })
+}
+
+if (TARGET === 'build' || !TARGET) {
+  module.exports = merge(common, {
+    entry: {
+      app: './src/framework/root.jsx',
+      vendor: [
+        'react',
+        'react-bootstrap',
+        'react-redux',
+        'redux',
+        'immutable',
+        'redux-form',
+        'redux-logger',
+        'seamless-immutable',
+      ]
+    },
+    devtool: 'source-map',
+    output: {
+      library: libraryName,
+      libraryTarget: 'umd',
+      umdNamedDefine: true
+    },
+    plugins: [
+      new webpack.optimize.CommonsChunkPlugin(/* chunkName= */"vendor", /* filename= */"vendor.bundle.js")
+    ]
+  })
 }

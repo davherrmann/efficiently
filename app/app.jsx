@@ -1,15 +1,15 @@
 import React from 'react';
-import component from '../framework/component';
+import component from '../src/framework/component';
 
 // framework components
-import {Ewb, Field, Dialog} from '../components';
+import {Ewb, Field, Dialog} from '../src/components';
 import {Button, Modal} from 'react-bootstrap';
 
 // my components
 import Form from './form';
 
 // actions
-import {server, submit, dialogAction} from '../actions';
+import {server, submit, dialogAction} from '../src/actions';
 
 export default component((state, dispatch) => (
   <Ewb actions={state.ewb.actions} title={state.ewb.title} onSubmit={() => this.refs.form.submit()}>
