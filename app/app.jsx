@@ -1,15 +1,15 @@
 import React from 'react';
-import component from '../src/framework/component';
+import {component} from 'efficiently/core';
 
 // framework components
-import {Ewb, Field, Dialog} from '../src/components';
+import {Ewb, Field, Dialog} from 'efficiently/components';
 import {Button, Modal} from 'react-bootstrap';
 
 // my components
 import Form from './form';
 
 // actions
-import {server, submit, dialogAction} from '../src/actions';
+import {server, submit, dialogAction} from 'efficiently/actions';
 
 export default component((state, dispatch) => (
   <Ewb actions={state.ewb.actions} title={state.ewb.title} onSubmit={() => this.refs.form.submit()}>

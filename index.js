@@ -1,4 +1,4 @@
-import {initEfficiently} from './src/framework/root';
+import {initEfficiently} from 'efficiently/core';
 import App from './app/app';
 
 let rootElement = document.getElementById('react');

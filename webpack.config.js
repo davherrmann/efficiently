@@ -29,6 +29,7 @@ var common = {
     ]
   },
   resolve: {
+    root: [path.resolve('./src')],
     extensions: ['', '.js', '.jsx']
   }
 }
@@ -36,6 +37,12 @@ var common = {
 if (TARGET === 'start') {
   module.exports = merge(common, {
     devtool: 'eval-source-map',
+    resolve: {
+      root: [
+        path.resolve('./src'),
+        path.resolve('./app')
+      ]
+    }
   })
 }
 
