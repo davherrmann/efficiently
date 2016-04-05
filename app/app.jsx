@@ -1,7 +1,7 @@
 import React from 'react';
 import {component} from 'efficiently/core';
 
-// components: framwork + custom
+// components: framework + custom
 import {Ewb, Field, Dialog, Button, Modal} from 'efficiently/components';
 import Form from './form';
 
