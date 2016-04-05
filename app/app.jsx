@@ -8,8 +8,8 @@ import Form from './form';
 // actions
 import {server, submit, dialogAction} from 'efficiently/actions';
 
-export default component((state, dispatch) => (
-  <Ewb actions={state.ewb.actions} title={state.ewb.title} onSubmit={() => this.refs.form.submit()}>
+export default component((state, dispatch, self) => (
+  <Ewb actions={state.ewb.actions} title={state.ewb.title} onSubmit={() => self.refs.form.submit()}>
     <h1>Test</h1>
     <Form
       ref="form"
