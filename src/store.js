@@ -7,7 +7,7 @@ import Immutable from 'seamless-immutable';
 import {reducer as formReducer} from 'redux-form';
 import createLogger from 'redux-logger';
 
-const logger = createLogger();
+const logger = createLogger({collapsed: true});
 
 const serverDispatch = store => next => action => {
   if (action.sendToServer !== true) {
