@@ -49,7 +49,7 @@ if (TARGET === 'start') {
 if (TARGET === 'build' || !TARGET) {
   module.exports = merge(common, {
     entry: {
-      app: './src/framework/root.jsx',
+      app: './src/core/root.jsx',
       vendor: [
         'react',
         'react-bootstrap',
