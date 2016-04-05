@@ -1,12 +1,11 @@
-import React from 'react';
-import {component} from 'efficiently/core';
+import {component, React} from 'efficiently-core';
 
 // components: framework + custom
-import {Ewb, Field, Dialog, Button, Modal} from 'efficiently/components';
+import {Ewb, Field, Dialog, Button, Modal} from 'efficiently-components';
 import Form from './form';
 
 // actions
-import {server, submit, dialogAction} from 'efficiently/actions';
+import {server, submit, dialogAction} from 'efficiently-actions';
 
 export default component((state, dispatch, self) => (
   <Ewb actions={state.ewb.actions} title={state.ewb.title} onSubmit={() => self.refs.form.submit()}>

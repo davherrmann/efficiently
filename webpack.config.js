@@ -39,7 +39,7 @@ if (TARGET === 'start') {
     devtool: 'eval-source-map',
     resolve: {
       root: [
-        path.resolve('./src'),
+        path.resolve('./src/efficiently'),
         path.resolve('./app')
       ]
     }
@@ -49,7 +49,9 @@ if (TARGET === 'start') {
 if (TARGET === 'build' || !TARGET) {
   module.exports = merge(common, {
     entry: {
-      app: './src/core/root.jsx',
+      core: './src/core/index.js',
+      actions: './src/actions/index.js',
+      components: './src/components/index.js',
       vendor: [
         'react',
         'react-bootstrap',
@@ -63,7 +65,8 @@ if (TARGET === 'build' || !TARGET) {
     },
     devtool: 'source-map',
     output: {
-      library: libraryName,
+      filename: libraryName + "-[name].js",
+      library: libraryName + '-[name]',
       libraryTarget: 'umd',
       umdNamedDefine: true
     },
