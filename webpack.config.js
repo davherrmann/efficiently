@@ -49,9 +49,10 @@ if (TARGET === 'start') {
 if (TARGET === 'build' || !TARGET) {
   module.exports = merge(common, {
     entry: {
-      core: './src/core/index.js',
-      actions: './src/actions/index.js',
-      components: './src/components/index.js',
+      app: './app/app.jsx',
+      core: './src/efficiently/efficiently-core.js',
+      actions: './src/efficiently/efficiently-actions.js',
+      components: './src/efficiently/efficiently-components.js',
       vendor: [
         'react',
         'react-bootstrap',
@@ -62,6 +63,11 @@ if (TARGET === 'build' || !TARGET) {
         'redux-logger',
         'seamless-immutable',
       ]
+    },
+    externals: {
+      'efficiently-core': 'efficiently-core',
+      'efficiently-actions': 'efficiently-actions',
+      'efficiently-components': 'efficiently-components'
     },
     devtool: 'source-map',
     output: {

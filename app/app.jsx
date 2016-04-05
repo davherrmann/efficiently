@@ -1,3 +1,4 @@
+// TODO is it really necessary to import React? move it to component(...)?
 import {component, React} from 'efficiently-core';
 
 // components: framework + custom
