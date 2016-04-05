@@ -1,24 +1,11 @@
-import {createStore, combineReducers, applyMiddleware} from 'redux';
-import myReducer from './reducers/myServerSideReducer';
+import {createStore as createReduxStore, combineReducers, applyMiddleware} from 'redux';
 import reduceForm from './reducers/reduceForm';
 import applyNewState from './reducers/applyNewState';
-import {applyStateFromServer} from './actions';
 import Immutable from 'seamless-immutable';
 import {reducer as formReducer} from 'redux-form';
 import createLogger from 'redux-logger';
 
 const logger = createLogger({collapsed: true});
-
-const serverDispatch = store => next => action => {
-  if (action.sendToServer !== true) {
-    return next(action);
-  }
-  console.log("sending action to server: " + JSON.stringify(action));
-  setTimeout(() => {
-    serverStore.dispatch(action);
-  }, 1000);
-  return next(action);
-}
 
 const clientReducers = (state = {}, action) => {
   let newState = applyNewState(state, action);
@@ -29,15 +16,9 @@ const clientReducers = (state = {}, action) => {
     .set("form", formReducer(state.form, action));
 }
 
-const clientStore = createStore(
-  clientReducers,
-  applyMiddleware(serverDispatch, logger)
-);
-
-const serverStore = createStore(myReducer);
-
-serverStore.subscribe(() => {
-  clientStore.dispatch(applyStateFromServer(serverStore.getState()));
-});
-
-export default clientStore;
+export function createStore(serverDispatch) {
+  return createReduxStore(
+    clientReducers,
+    applyMiddleware(serverDispatch, logger)
+  );
+}

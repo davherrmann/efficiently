@@ -1,6 +1,6 @@
-import {initEfficiently} from 'efficiently/core';
+import {initEfficiently, serverDispatch} from 'efficiently/core';
 import App from './app/app';
 
 let rootElement = document.getElementById('react');
 
-initEfficiently(rootElement, App);
+initEfficiently(rootElement, App, serverDispatch);
