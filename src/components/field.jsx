@@ -4,8 +4,18 @@ import {Input} from 'react-bootstrap';
 
 const Field = React.createClass({
   render() {
+    console.log(this.props);
     return (
-      <Input standalone {...this.props} hasFeedback/>
+      <Input
+        standalone
+        hasFeedback
+        bsStyle={this.props.model.touched && this.props.model.error ? "error" : null}
+        help={this.props.model.touched && this.props.model.error}
+        labelClassName={"col-xs-" + this.props.cols.split(',')[0]}
+        wrapperClassName={"col-xs-" + this.props.cols.split(',')[1]}
+        {...this.props}
+        {...this.props.model}
+        />
     )
   }
 });

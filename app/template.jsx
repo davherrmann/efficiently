@@ -1,6 +1,5 @@
-import React from 'react';
-import {component} from 'efficiently-core';
+import {React, component} from 'efficiently-core';
 
-export default component((state, dispatch) => (
+export default component((state, dispatch, self) => (
 
 ))
