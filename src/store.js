@@ -17,8 +17,9 @@ const clientReducers = (state = {}, action) => {
 }
 
 export function createStore(serverDispatch) {
+  let middleWare = serverDispatch ? applyMiddleware(serverDispatch, logger) : applyMiddleware(logger);
   return createReduxStore(
     clientReducers,
-    applyMiddleware(serverDispatch, logger)
+    middleWare
   );
 }
