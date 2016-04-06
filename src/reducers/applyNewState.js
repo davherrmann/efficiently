@@ -1,9 +1,9 @@
-import Immutable from 'immutable';
+import Immutable from 'seamless-immutable';
 
 export default (state = {}, action) => {
   switch (action.type) {
     case 'applyStateFromServer':
-      return action.state.set('ready', true);
+      return Immutable(action.state).set('ready', true);
     default:
       return state;
   }
