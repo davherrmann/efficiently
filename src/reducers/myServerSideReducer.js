@@ -6,6 +6,11 @@ const initialState = Immutable({
     title: "MyEWB"
   },
   wantToClose: false,
+  initialData: {
+    firstName: "David",
+    lastName: "Herrmann",
+    email: "davherrmann@googlemail.com"
+  }
 })
 
 export default (state = initialState, action) => {

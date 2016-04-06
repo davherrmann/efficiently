@@ -34,4 +34,9 @@ export default reduxForm({
   form: 'contact',
   validate: validate,
   fields: ['firstName', 'lastName', 'email']
-})(Form);
+},
+state => ({
+  state,
+  initialValues: state.initialData
+})
+)(Form);
