@@ -4,7 +4,6 @@ import {Input} from 'react-bootstrap';
 
 const Field = React.createClass({
   render() {
-    console.log(this.props);
     return (
       <Input
         standalone
