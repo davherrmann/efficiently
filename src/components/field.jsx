@@ -12,7 +12,7 @@ const Field = React.createClass({
     let {form, model, validators = []} = this.props;
     let field = getField(form, model.split('.').slice(1).join('.'));
 
-    let reactReduxValidators = validators.reduce((prev, curr) => {console.log(prev); prev[curr.name] = curr.validate; return prev}, {});
+    let reactReduxValidators = validators.reduce((prev, curr) => {prev[curr.name] = curr.validate; return prev}, {});
 
     let helpText = validators.reduce((prev, curr) => {
       return prev + ((field.touched && field.errors[curr.name] && (curr.message + " ") || prev))
