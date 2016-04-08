@@ -5,6 +5,11 @@ const initialState = Immutable({
     actions: ["print", "close", "save"],
     title: "MyEWB"
   },
+  assistant: {
+    actions: ["print", "close", "save"],
+    title: "MyAssistant",
+    currentPage: 0
+  },
   wantToClose: false,
   initialData: {
     firstName: "David",
@@ -42,6 +47,20 @@ export default (state = initialState, action) => {
         return state.set("wantToClose", false);
       }
       return state;
+
+    case "assistantAction":
+      if (action.actionId === 'close') {
+        return state.set('wantToClose', true);
+      }
+
+      if (action.actionId === 'next') {
+        return state.setIn(['assistant', 'currentPage'], state.assistant.currentPage + 1);
+      }
+
+      if (action.actionId === 'previous') {
+        // TODO who should prevent negative pages?
+        return state.setIn(['assistant', 'currentPage'], state.assistant.currentPage - 1);
+      }
 
     default:
       return state;

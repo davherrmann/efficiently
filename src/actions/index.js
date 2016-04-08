@@ -54,3 +54,10 @@ export function dialogAction(actionId, actionName) {
     actionName
   }
 }
+
+export function assistantAction(actionId) {
+  return {
+    type: 'assistantAction',
+    actionId
+  }
+}
