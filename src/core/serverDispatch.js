@@ -17,7 +17,7 @@ const serverDispatch = (store) => {
     console.log("sending action to server: " + JSON.stringify(action));
     setTimeout(() => {
       serverStore.dispatch(action);
-    }, 1000);
+    }, 100);
     return next(action);
   };
 }

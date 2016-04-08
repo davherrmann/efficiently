@@ -3,18 +3,15 @@ import {component, React} from 'efficiently-core';
 
 // components: framework + custom
 import {Ewb, Field, Dialog, Button, Modal} from 'efficiently-components';
-import Form from './form';
+import MyForm from './myForm';
 
 // actions
 import {server, submit, dialogAction} from 'efficiently-actions';
 
 export default component((state, dispatch, self) => (
-  <Ewb actions={state.ewb.actions} title={state.ewb.title} onSubmit={() => self.refs.form.submit()}>
-    <h1>Test</h1>
-    <Form
-      ref="form"
-      onSubmit={data => dispatch(server(submit()))}>
-    </Form>
+  <Ewb actions={state.ewb.actions} title={state.ewb.title} onSubmit={() => window.alert("submitting form")}>
+    <h1>Testtitel</h1>
+    <MyForm></MyForm>
     <Dialog
       title="Super major feedback question"
       actions={[dialogAction('reallyClose', 'Yes, CLOSE the thing!')]}
