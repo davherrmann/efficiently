@@ -6,6 +6,7 @@ import {Ewb, Field, Dialog, Button, Modal, Assistant, AssistantPage} from 'effic
 import MyForm from './myForm';
 import Page0 from './page0';
 import Page1 from './page1';
+import Page2 from './page2';
 
 // actions
 import {server, submit, dialogAction} from 'efficiently-actions';
@@ -15,6 +16,7 @@ export default component((state, dispatch, self) => (
     <Assistant title={state.assistant.title} actions={state.assistant.actions} currentPage={state.assistant.currentPage}>
       <Page0></Page0>
       <Page1></Page1>
+      <Page2></Page2>
     </Assistant>
     <Dialog
       title="Super major feedback question"
