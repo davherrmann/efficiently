@@ -61,3 +61,9 @@ export function assistantAction(actionId) {
     actionId
   }
 }
+
+export function requestNewItems() {
+  return {
+    type: 'requestNewItems'
+  }
+}
