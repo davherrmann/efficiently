@@ -6,3 +6,4 @@ export {default as Form} from './form';
 export {Button, Modal} from 'react-bootstrap';
 export {default as Assistant} from './assistant';
 export {default as AssistantPage} from './assistantpage';
+export {default as Table} from './table';
