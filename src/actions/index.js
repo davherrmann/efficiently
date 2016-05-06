@@ -63,3 +63,9 @@ export function requestNewItems() {
     type: 'requestNewItems'
   }
 }
+
+export function refreshAction() {
+  return {
+    type: 'refreshAction'
+  }
+}

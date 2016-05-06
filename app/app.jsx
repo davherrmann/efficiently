@@ -2,7 +2,7 @@
 import {component, React} from 'efficiently-core';
 
 // components: framework + custom
-import {Ewb, Field, Dialog, Button, Modal, Assistant, AssistantPage} from 'efficiently-components';
+import {Ewb, Field, Dialog, Button, Modal, Assistant, AssistantPage, Refresher} from 'efficiently-components';
 import MyForm from './myForm';
 import Page0 from './page0';
 import Page1 from './page1';
@@ -13,6 +13,7 @@ import {server, submit, dialogAction} from 'efficiently-actions';
 
 export default component((state, dispatch, self) => (
   <div>
+    <Refresher delay={500} refresh={state.waitingForAsync}></Refresher>
     <Assistant title={state.assistant.title} actions={state.assistant.actions} currentPage={state.assistant.currentPage}>
       <Page0></Page0>
       <Page1></Page1>
