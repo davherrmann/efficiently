@@ -13,8 +13,7 @@ export function initState() {
 
 export function ewbAction(action) {
   return {
-    type: 'ewbAction',
-    action
+    type: 'ewbAction/' + action,
   }
 }
 
@@ -42,23 +41,20 @@ export function closeEwb() {
 
 export function dialogResult(action) {
   return {
-    type: 'dialogResult',
-    action
+    type: 'dialogResult/' + action,
   }
 }
 
 export function dialogAction(actionId, actionName) {
   return {
-    type: 'dialogAction',
-    actionId,
+    type: 'dialogAction/' + actionId,
     actionName
   }
 }
 
 export function assistantAction(actionId) {
   return {
-    type: 'assistantAction',
-    actionId
+    type: 'assistantAction/' + actionId,
   }
 }
 
