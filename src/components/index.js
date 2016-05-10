@@ -8,3 +8,4 @@ export {default as Assistant} from './assistant';
 export {default as AssistantPage} from './assistantpage';
 export {default as Table} from './table';
 export {default as Refresher} from './refresher';
+export {default as States} from './states';

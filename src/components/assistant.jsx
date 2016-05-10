@@ -6,13 +6,13 @@ import Immutable from 'seamless-immutable';
 
 class Ewb extends Component {
   render() {
-    const {dispatch, children, actions, title, onSubmit, currentPage = 0} = this.props;
+    const {dispatch, children, actions, title, onSubmit, currentPage = 0, style} = this.props;
 
     // TODO use React.cloneElement and set prop hidden for better performance!
     let filteredChildren = React.Children.toArray(children).filter((child, index) => index === currentPage);
 
     return (
-      <div>
+      <div style={Object.assign(style, {display: "flex", flexDirection: "column", height: "100vh"})}>
         <Navbar>
           <Navbar.Header>
             <Navbar.Brand>
@@ -27,10 +27,10 @@ class Ewb extends Component {
             </Navbar.Form>
           </Navbar.Collapse>
         </Navbar>
-        <Grid>
+        <Grid style={{flexGrow: 1}}>
           {filteredChildren}
         </Grid>
-        <Navbar>
+        <Navbar style={{marginBottom: 0}}>
           <Navbar.Collapse>
             <Navbar.Form pullRight>
               <Button disabled={currentPage <= 0} onClick={() => dispatch(server(assistantAction('previous')))} bsStyle="primary">Previous</Button>

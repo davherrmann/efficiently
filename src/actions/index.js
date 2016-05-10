@@ -69,3 +69,12 @@ export function refreshAction() {
     type: 'refreshAction'
   }
 }
+
+export function setState(name) {
+  return {
+    type: 'setState/'+ name,
+    meta: {
+      name: name
+    }
+  }
+}

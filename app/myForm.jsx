@@ -19,7 +19,7 @@ let validators = {
 export default component((state, dispatch) => (
   <Form>
     <FormGroup>
-      <Field type="text" validators={[validators.required, validators.lengthGreaterThanFour]} cols="2,4" label="First Name" placeholder="First Name..." model="user.firstname" form={state.userForm}></Field>
+      <Field type="text" validators={[validators.required, validators.lengthGreaterThanFour]} cols="2,4" label={state.form.firstnameLabel} placeholder="First Name..." model="user.firstname" form={state.userForm}></Field>
       <Field type="text" cols="2,2" label="Last Name" placeholder="Last Name..." model="user.lastname" form={state.userForm}></Field>
     </FormGroup>
 

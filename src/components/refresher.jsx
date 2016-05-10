@@ -32,7 +32,7 @@ class Refresher extends Component {
 
   render() {
     return (
-      <Label bsStyle={this.interval ? "warning" : "default"}>{this.interval ? "refreshing..." : "up to date"}</Label>
+      <Label bsStyle={this.interval ? "warning" : "default"}>{"async"}</Label>
     );
   }
 }
