@@ -10,13 +10,12 @@ const modelReducer = createModelReducer('user');
 const formReducer = createFormReducer('user');
 
 const clientReducers = (state = {}, action) => {
-  let newState = applyNewState(state, action);
-  // add other client side reducers here
-  return Immutable(newState)
-    .set("form1", reduceForm(state.form1, action))
-    .set("form2", reduceForm(state.form2, action))
+  let clientState = Immutable(state)
     .set("user", modelReducer(state.user, action))
     .set("userForm", formReducer(state.userForm, action));
+
+  let mergedState = applyNewState(clientState, action);
+  return mergedState;
 }
 
 export function createStore(serverDispatch) {
