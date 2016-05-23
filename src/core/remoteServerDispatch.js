@@ -5,19 +5,23 @@ import Immutable from 'seamless-immutable';
 import diff from 'seamless-immutable-diff';
 import Differ from './differ';
 
-let lastSentState = Immutable({user : Immutable({})});
+let lastMergedState = {};
 let differ = new Differ();
 
 const serverDispatch = (store) => next => action => {
+    if (action.type === "applyStateFromServer") {
+      let returnedValue = next(action);
+      lastMergedState = store.getState();
+      return returnedValue;
+    }
     if (action.sendToServer !== true) {
       return next(action);
     }
     console.log('sending action to server: ' + JSON.stringify(action));
 
-    let stateDiff = differ.diff(lastSentState.user, store.getState().user);
+    let stateDiff = differ.diff(lastMergedState.user, store.getState().user);
     console.log("sending state diff:");
     console.log(stateDiff);
-    lastSentState = store.getState();
 
     let data = new FormData();
     data.append('json', JSON.stringify(action));
