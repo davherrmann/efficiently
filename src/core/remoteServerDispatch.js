@@ -17,6 +17,14 @@ const serverDispatch = (store) => next => action => {
     if (action.sendToServer !== true) {
       return next(action);
     }
+
+    if (action.type === "initState") {
+      fetch('http://localhost:8081/reset', {
+        method: 'POST',
+        credentials: 'include'
+      });
+    }
+
     console.log('sending action to server: ' + JSON.stringify(action));
 
     let stateDiff = differ.diff(lastMergedState.user, store.getState().user);
@@ -28,6 +36,7 @@ const serverDispatch = (store) => next => action => {
 
     fetch('http://localhost:8081', {
       method: 'POST',
+      credentials: 'include',
       body: JSON.stringify({
         clientStateDiff: {
           type: "de.davherrmann.efficiently.app.MySpecialState",
