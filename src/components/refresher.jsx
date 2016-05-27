@@ -6,7 +6,7 @@ import {Label} from 'react-bootstrap';
 class Refresher extends Component {
   start() {
     if (!this.interval) {
-      this.interval = setInterval(() => this.refresh(), this.props.delay);
+      this.interval = setInterval(() => this.refresh(), this.props.delay || 1000);
     }
   }
 
