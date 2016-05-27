@@ -12,7 +12,7 @@ class Assistant extends Component {
     let filteredChildren = React.Children.toArray(children).filter((child, index) => index === currentPage);
 
     return (
-      <div style={Object.assign(style, {display: "flex", flexDirection: "column", height: "100vh"})}>
+      <div style={Object.assign(Immutable(style).asMutable(), {display: "flex", flexDirection: "column", height: "100vh"})}>
         <Navbar>
           <Navbar.Header>
             <Navbar.Brand>
