@@ -52,6 +52,7 @@ class View extends Component {
     if (!state.view) {
       return <div>no view yet</div>
     }
+    // TODO cache the view (only do componentMapping etc. once!)
     return this.recursiveRender(state, state.view);
   }
 
