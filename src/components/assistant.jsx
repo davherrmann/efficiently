@@ -4,9 +4,9 @@ import {ewbAction, server, assistantAction} from '../actions';
 import {Button, Navbar, Nav, NavItem, NavDropdown, MenuItem, Grid} from 'react-bootstrap';
 import Immutable from 'seamless-immutable';
 
-class Ewb extends Component {
+class Assistant extends Component {
   render() {
-    const {dispatch, children, actions, title, onSubmit, currentPage = 0, style} = this.props;
+    const {dispatch, children, actions = [], title = "", onSubmit, currentPage = 0, style = {flexGrow: 0}} = this.props;
 
     // TODO use React.cloneElement and set prop hidden for better performance!
     let filteredChildren = React.Children.toArray(children).filter((child, index) => index === currentPage);
@@ -43,4 +43,4 @@ class Ewb extends Component {
   }
 }
 
-export default connect()(Ewb);
+export default connect()(Assistant);
