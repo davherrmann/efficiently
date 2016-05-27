@@ -8,11 +8,18 @@ import { modelReducer as createModelReducer, formReducer as createFormReducer } 
 const logger = createLogger({collapsed: true});
 const modelReducer = createModelReducer('user');
 const formReducer = createFormReducer('user');
+const viewReducer = (state, action) => {
+  if ("initView" === action.type) {
+    return action.view;
+  }
+  return state;
+}
 
 const clientReducers = (state = {}, action) => {
   let clientState = Immutable(state)
     .set("user", modelReducer(state.user, action))
-    .set("userForm", formReducer(state.userForm, action));
+    .set("userForm", formReducer(state.userForm, action))
+    .set("view", viewReducer(state.view, action));
 
   let mergedState = applyNewState(clientState, action);
   return mergedState;

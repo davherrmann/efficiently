@@ -78,3 +78,14 @@ export function setState(name) {
     }
   }
 }
+
+export function initView(view) {
+  return {
+    type: 'initView',
+    view
+  }
+}
+
+export function anyAction(type) {
+  return {type}
+}
