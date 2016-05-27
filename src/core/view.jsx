@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Assistant, Button, Dialog} from '../components';
+import {Assistant, Button, Dialog, Refresher} from '../components';
 import {server, anyAction} from '../actions';
 
 function isObject(obj) {
@@ -20,7 +20,8 @@ class View extends Component {
       "Button": Button,
       "input": "input",
       "Input": "input",
-      "Dialog": Dialog
+      "Dialog": Dialog,
+      "Refresher": Refresher
     }[name] || "div";
   }
 
