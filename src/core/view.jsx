@@ -56,18 +56,19 @@ class View extends Component {
   }
 
   recursiveRender(state, view, key) {
+    let {content, ...props} = view;
     let Component = this.componentMapping(view.type);
-    let mappedProps = this.mapProps(state, view);
+    let mappedProps = this.mapProps(state, props);
 
-    let content = [];
-    if (isArray(view.content)) {
-      view.content.forEach((component, key) => content.push(this.recursiveRender(state, component, key)));
+    let mappedContent = [];
+    if (isArray(content)) {
+      content.forEach((component, key) => mappedContent.push(this.recursiveRender(state, component, key)));
     } else {
-      content = (view.content ? this.pathToStateMapping(state, view.content.split('.')) : null);
+      mappedContent = (content ? this.pathToStateMapping(state, content.split('.')) : null);
     }
 
     return <Component {...mappedProps} key={key}>
-      {content}
+      {mappedContent}
     </Component>
   }
 }
