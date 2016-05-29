@@ -39,7 +39,7 @@ export default React.createClass({
             vGrid.addEventListener("selected-items-changed", _this.onRowSelect);
 
             // Define columns
-            vGrid.columns = _this.props.columns;
+            vGrid.columns = Immutable(_this.props.columns).asMutable({deep: true});
 
           } else {
               setTimeout( wait, 50 );

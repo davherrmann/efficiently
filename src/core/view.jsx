@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Assistant, Button, Dialog, Refresher, States, Form, FormGroup, Field} from '../components';
+import {Assistant, Button, Dialog, Refresher, States, Form, FormGroup, Field, Table} from '../components';
 import {server, anyAction} from '../actions';
 
 function isObject(obj) {
@@ -25,7 +25,8 @@ class View extends Component {
       "States": States,
       "Form": Form,
       "FormGroup": FormGroup,
-      "Field": Field
+      "Field": Field,
+      "Table": Table
     }[name] || "div";
   }
 
