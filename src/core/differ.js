@@ -14,7 +14,7 @@ export default class Differ {
       }
 
       let nestedDiff = this.diff(obj1[key], obj2[key]);
-      if (nestedDiff) {
+      if (nestedDiff && Object.keys(nestedDiff).length > 0) {
       	diff[key] = nestedDiff;
       }
     }

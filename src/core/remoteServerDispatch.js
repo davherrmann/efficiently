@@ -27,7 +27,10 @@ const serverDispatch = (store) => next => action => {
 
     console.log('sending action to server: ' + JSON.stringify(action));
 
-    let stateDiff = differ.diff(lastMergedState.user, store.getState().user);
+    let stateDiff = differ.diff(lastMergedState, store.getState());
+    // TODO delete all data which is not hold on server
+    delete stateDiff.clientSideFormMetaData;
+    delete stateDiff.clientSideViewMetaData;
     console.log("sending state diff:");
     console.log(stateDiff);
 
@@ -40,9 +43,7 @@ const serverDispatch = (store) => next => action => {
       body: JSON.stringify({
         clientStateDiff: {
           type: "de.davherrmann.efficiently.app.MySpecialState",
-          data: {
-            user: stateDiff
-          }
+          data: stateDiff
         },
         action: action
       })

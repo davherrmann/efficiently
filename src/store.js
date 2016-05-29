@@ -6,8 +6,8 @@ import createLogger from 'redux-logger';
 import { modelReducer as createModelReducer, formReducer as createFormReducer } from 'react-redux-form';
 
 const logger = createLogger({collapsed: true});
-const modelReducer = createModelReducer('user');
-const formReducer = createFormReducer('user');
+const modelReducer = createModelReducer('clientSideFormData');
+const formReducer = createFormReducer('clientSideFormData');
 const viewReducer = (state, action) => {
   if ("initView" === action.type) {
     return action.view;
@@ -17,12 +17,12 @@ const viewReducer = (state, action) => {
 
 const clientReducers = (state = {}, action) => {
   let clientState = Immutable(state)
-    .set("user", modelReducer(state.user, action))
-    .set("userForm", formReducer(state.userForm, action))
-    .set("view", viewReducer(state.view, action));
+    // .set("user", modelReducer(state.user, action))
+    .set("clientSideFormMetaData", formReducer(state.clientSideFormMetaData, action))
+    .set("clientSideViewMetaData", viewReducer(state.clientSideViewMetaData, action));
 
   let mergedState = applyNewState(clientState, action);
-  return mergedState;
+  return modelReducer(mergedState, action);
 }
 
 export function createStore(serverDispatch) {

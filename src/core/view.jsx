@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Assistant, Button, Dialog, Refresher, States} from '../components';
+import {Assistant, Button, Dialog, Refresher, States, Form, FormGroup, Field} from '../components';
 import {server, anyAction} from '../actions';
 
 function isObject(obj) {
@@ -22,7 +22,10 @@ class View extends Component {
       "Input": "input",
       "Dialog": Dialog,
       "Refresher": Refresher,
-      "States": States
+      "States": States,
+      "Form": Form,
+      "FormGroup": FormGroup,
+      "Field": Field
     }[name] || "div";
   }
 
@@ -41,21 +44,28 @@ class View extends Component {
   mapProps(state, props) {
     let mappedProps = {};
     for (let key in props) {
-      let value = this.pathToStateMapping(state, props[key].toString().split('.'));
+      let path = props[key].toString().split('.');
+      let value = this.pathToStateMapping(state, path);
       mappedProps[key] = key.startsWith("on")
         ? () => {this.props.dispatch(server(anyAction(value)))}
         : value;
+
+      // TODO do this on server side?
+      // TODO allow "middleware" for component creation
+      if (path.slice(-1)[0] === "value") {
+        mappedProps["model"] = props[key];
+      }
     }
     return mappedProps;
   }
 
   render() {
     const {state} = this.props;
-    if (!state.view) {
+    if (!state.clientSideViewMetaData) {
       return <div>no view yet</div>
     }
     // TODO cache the view (only do componentMapping etc. once!)
-    return this.recursiveRender(state, state.view);
+    return this.recursiveRender(state, state.clientSideViewMetaData);
   }
 
   recursiveRender(state, view, key) {
