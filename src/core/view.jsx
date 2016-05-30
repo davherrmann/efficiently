@@ -30,6 +30,14 @@ class View extends Component {
     }[name] || "div";
   }
 
+  derivedValue(value, derivationName) {
+    const derivations = {
+      "isEmpty": (str) => (!str || 0 === str.length)
+    }
+    const derivation = derivations[derivationName] || (value => value);
+    return derivation(value);
+  }
+
   pathToStateMapping(state, path) {
     if (path.length < 1 || !state) {
       return state;
@@ -45,16 +53,21 @@ class View extends Component {
   mapProps(state, props) {
     let mappedProps = {};
     for (let key in props) {
-      let path = props[key].toString().split('.');
-      let value = this.pathToStateMapping(state, path);
+      if (key === "type") {
+        continue;
+      }
+
+      const derivationWrapper = props[key];
+      const path = derivationWrapper.sourceValue.toString().split('.');
+      const sourceValue = this.pathToStateMapping(state, path);
       mappedProps[key] = key.startsWith("on")
-        ? () => {this.props.dispatch(server(anyAction(value)))}
-        : value;
+        ? () => {this.props.dispatch(server(anyAction(sourceValue)))}
+        : this.derivedValue(sourceValue, derivationWrapper.name);
 
       // TODO do this on server side?
       // TODO allow "middleware" for component creation
       if (path.slice(-1)[0] === "value") {
-        mappedProps["model"] = props[key];
+        mappedProps["model"] = derivationWrapper.sourceValue;
       }
     }
     return mappedProps;
