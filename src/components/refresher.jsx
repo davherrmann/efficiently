@@ -30,6 +30,12 @@ class Refresher extends Component {
     }
   }
 
+  componentWillMount() {
+    if (this.props.refresh) {
+      this.start();
+    }
+  }
+
   render() {
     return (
       <Label bsStyle={this.interval ? "warning" : "default"}>{"async"}</Label>
