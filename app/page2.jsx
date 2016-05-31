@@ -8,7 +8,7 @@ const pictureRenderer = function(cell) {
 
 export default component((state, dispatch) => (
   <Table
-    items={state.items}
+    items={state.pageUserList.items}
     columns={[
       {name: "thumbnail", width: 100, renderer: pictureRenderer},
       {name: "firstname"},

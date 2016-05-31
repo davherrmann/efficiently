@@ -27,14 +27,14 @@ class View extends Component {
       "FormGroup": FormGroup,
       "Field": Field,
       "Table": Table
-    }[name] || "div";
+    }[name] || this.props.components[name] || "div";
   }
 
   derivedValue(value, derivationName) {
     const derivations = {
       "isEmpty": (str) => (!str || 0 === str.length)
     }
-    const derivation = derivations[derivationName] || (value => value);
+    const derivation = derivations[derivationName] || this.props.derivations[derivationName] || (value => value);
     return derivation(value);
   }
 
