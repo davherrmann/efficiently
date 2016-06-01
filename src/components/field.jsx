@@ -21,6 +21,7 @@ const Field = React.createClass({
       return prev + ((field.touched && field.errors[curr.name] && (curr.message + " ") || prev))
     }, "")
 
+    // TODO use validateOn, don't always send server(validate(...)) on change!
     return (
       <ReactBootstrapField
         model={"clientSideFormData." + model}
