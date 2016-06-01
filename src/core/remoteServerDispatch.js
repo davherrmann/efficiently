@@ -25,14 +25,11 @@ const serverDispatch = (store) => next => action => {
       });
     }
 
-    console.log('sending action to server: ' + JSON.stringify(action));
-
     let stateDiff = differ.diff(lastMergedState, store.getState());
     // TODO delete all data which is not hold on server
     delete stateDiff.clientSideFormMetaData;
     delete stateDiff.clientSideViewMetaData;
-    console.log("sending state diff:");
-    console.log(stateDiff);
+    console.log("client diff: " + JSON.stringify(stateDiff));
 
     let data = new FormData();
     data.append('json', JSON.stringify(action));

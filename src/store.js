@@ -4,6 +4,7 @@ import applyNewState from './reducers/applyNewState';
 import Immutable from 'seamless-immutable';
 import createLogger from 'redux-logger';
 import { modelReducer as createModelReducer, formReducer as createFormReducer } from 'react-redux-form';
+import thunk from 'redux-thunk';
 
 const logger = createLogger({collapsed: true});
 const modelReducer = createModelReducer('clientSideFormData');
@@ -26,9 +27,8 @@ const clientReducers = (state = {}, action) => {
 }
 
 export function createStore(serverDispatch) {
-  let middleWare = serverDispatch ? applyMiddleware(serverDispatch, logger) : applyMiddleware(logger);
-  return createReduxStore(
-    clientReducers,
-    middleWare
-  );
+  const appliedMiddleware = serverDispatch
+    ? applyMiddleware(thunk, logger, serverDispatch)
+    : applyMiddleware(thunk, logger)
+  return appliedMiddleware(createReduxStore)(clientReducers);
 }

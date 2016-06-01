@@ -1,7 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Input} from 'react-bootstrap';
-import { getField, createFieldClass, controls } from 'react-redux-form';
+import { getField, createFieldClass, controls, actions } from 'react-redux-form';
+import {validate, server} from '../actions';
 
 const ReactBootstrapField = createFieldClass({
   'Input': controls.text
@@ -9,11 +10,12 @@ const ReactBootstrapField = createFieldClass({
 
 const Field = React.createClass({
   render() {
-    let {form, model, cols = "2,4", type = "text", validators = [], state} = this.props;
+    let {form, model, cols = "2,4", type = "text", validators = [], state, validateOn, dispatch} = this.props;
     form = form || state && state["clientSideFormMetaData"];
     let field = model && getField(form, model.split('.').slice(1).join('.')) || {};
 
     let reactReduxValidators = validators.reduce((prev, curr) => {prev[curr.name] = curr.validate; return prev}, {});
+    validateOn ? reactReduxValidators["remoteValidation"] = () => (dispatch(server(validate(model))) || true) : undefined;
 
     let helpText = validators.reduce((prev, curr) => {
       return prev + ((field.touched && field.errors[curr.name] && (curr.message + " ") || prev))
@@ -22,7 +24,10 @@ const Field = React.createClass({
     return (
       <ReactBootstrapField
         model={"clientSideFormData." + model}
-        validators={reactReduxValidators}
+        changeAction={(extendedModel, value) => (dispatch) => {
+          dispatch(actions.change(extendedModel, value));
+          dispatch(server(validate(model)));
+        }}
         >
         <Input
           standalone
@@ -33,6 +38,7 @@ const Field = React.createClass({
           wrapperClassName={"col-xs-" + cols.split(',')[1]}
           {...this.props}
           type={type}
+
           />
       </ReactBootstrapField>
     )

@@ -89,3 +89,9 @@ export function initView(view) {
 export function anyAction(type) {
   return {type}
 }
+
+export function validate(field) {
+  return {
+    type: "validate/" + field,
+  }
+}
