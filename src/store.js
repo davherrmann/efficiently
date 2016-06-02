@@ -1,4 +1,5 @@
-import {createStore as createReduxStore, combineReducers, applyMiddleware} from 'redux';
+
+import {createStore as createReduxStore, combineReducers, applyMiddleware, compose} from 'redux';
 import reduceForm from './reducers/reduceForm';
 import applyNewState from './reducers/applyNewState';
 import Immutable from 'seamless-immutable';
@@ -29,6 +30,7 @@ const clientReducers = (state = {}, action) => {
 export function createStore(serverDispatch) {
   const appliedMiddleware = serverDispatch
     ? applyMiddleware(thunk, logger, serverDispatch)
-    : applyMiddleware(thunk, logger)
-  return appliedMiddleware(createReduxStore)(clientReducers);
+    : applyMiddleware(thunk, logger);
+  const devTools = window.devToolsExtension ? window.devToolsExtension() : f => f;
+  return createReduxStore(clientReducers, {}, compose(appliedMiddleware, devTools));
 }
