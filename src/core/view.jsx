@@ -67,7 +67,8 @@ class View extends Component {
       // TODO do this on server side?
       // TODO allow "middleware" for component creation
       if (path.slice(-1)[0] === "value") {
-        mappedProps["model"] = derivationWrapper.sourceValue;
+        const source = derivationWrapper.sourceValue;
+        mappedProps["model"] = source.substr(0, source.length - ".value".length)
       }
     }
     return mappedProps;

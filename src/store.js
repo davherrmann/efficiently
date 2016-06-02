@@ -9,7 +9,7 @@ import thunk from 'redux-thunk';
 
 const logger = createLogger({collapsed: true});
 const modelReducer = createModelReducer('clientSideFormData');
-const formReducer = createFormReducer('clientSideFormData');
+const formReducer = createFormReducer('clientSideFormMetaData');
 const viewReducer = (state, action) => {
   if ("initView" === action.type) {
     return action.view;
