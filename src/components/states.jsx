@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Immutable from 'seamless-immutable';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 // components
 import {ListGroup, ListGroupItem} from 'react-bootstrap';
@@ -12,12 +13,7 @@ import Differ from '../core/differ';
 class States extends Component {
   constructor() {
     super();
-    this.differ = new Differ();
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    const diff = this.differ.diff(this.props, nextProps);
-    return Object.keys(diff).length !== 0;
+    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
   }
 
   render() {

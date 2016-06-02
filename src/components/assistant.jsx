@@ -3,8 +3,14 @@ import {connect} from 'react-redux';
 import {ewbAction, server, assistantAction} from '../actions';
 import {Button, Navbar, Nav, NavItem, NavDropdown, MenuItem, Grid} from 'react-bootstrap';
 import Immutable from 'seamless-immutable';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 class Assistant extends Component {
+  constructor() {
+    super();
+    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+  }
+
   render() {
     const {dispatch, children, actions = [], title = "", onSubmit, currentPage = 0, style = {flexGrow: 0}} = this.props;
 

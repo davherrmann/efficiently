@@ -3,12 +3,15 @@ import {connect} from 'react-redux';
 import {Input} from 'react-bootstrap';
 import { getField, createFieldClass, controls, actions } from 'react-redux-form';
 import {validate, server} from '../actions';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 const ReactBootstrapField = createFieldClass({
   'Input': controls.text
 });
 
 const Field = React.createClass({
+  mixins: [PureRenderMixin],
+
   render() {
     let {form, model, cols = "2,4", type = "text", validators = [], state, validateOn, dispatch} = this.props;
     form = form || state && state["clientSideFormMetaData"];
