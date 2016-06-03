@@ -12,45 +12,43 @@ const ReactBootstrapField = createFieldClass({
   'Input': controls.text
 });
 
+const PREFIX = "clientSideFormData.";
+const withPrefix = (model) => PREFIX + model;
+const withoutPrefix = (model) => model.slice(PREFIX.length);
+
+const validateOnChange = (model, value) => (dispatch) => {
+  dispatch(actions.change(model, value));
+  dispatch(server(validate(withoutPrefix(model))));
+}
+
+const validateOnBlur = (model, value) => (dispatch) => dispatch(server(validate(model)));
+
 class EfficientlyField extends Component {
   shouldComponentUpdate(nextProps) {
-    // return Object.keys(new Differ().diff(this.props, nextProps)).length > 0;
     return this.props != nextProps;
   }
 
   render() {
-    let {field, model, cols = "2,4", type = "text", validators = [], validateOn, dispatch, valid, error} = this.props;
+    const {field, model, cols = "2,4", type = "text", validateOn, dispatch, valid, error, value} = this.props;
 
-    let helpText = field.touched && error ? helpText + " " + error : helpText;
+    const showValidation = field.touched || field.focus;
+    const isInvalid = !field.valid || !valid;
 
-    this.changeAction = this.changeAction || (validateOn && validateOn.toLowerCase() === "change"
-      ? (model, value) => (dispatch) => {
-          const nestedModel = model.slice("clientSideFormData.".length);
-          dispatch(actions.change("clientSideFormData." + nestedModel, value));
-          dispatch(server(validate(nestedModel)));
-        }
-      : undefined);
-
-    this.onBlurAction = this.onBlurAction || (validateOn && validateOn.toLowerCase() === "blur"
-      ? () => dispatch(server(validate(model)))
-      : undefined);
-
-    // TODO use validateOn, don't always send server(validate(...)) on change!
     return (
       <ReactBootstrapField
-        model={"clientSideFormData." + model}
-        changeAction={this.changeAction}
+        model={withPrefix(model)}
+        changeAction={validateOn === "CHANGE" ? validateOnChange : undefined}
         >
         <Input
           standalone
           hasFeedback
-          bsStyle={(field.touched || field.focus) && (!field.valid || valid === false) ? "error" : field.touched ? "success" : null}
-          help={helpText ? helpText : null}
+          bsStyle={showValidation && isInvalid ? "error" : showValidation ? "success" : null}
+          help={field.touched && error ? error : null}
           labelClassName={"col-xs-" + cols.split(',')[0]}
           wrapperClassName={"col-xs-" + cols.split(',')[1]}
           {...this.props}
           type={type}
-          onBlur={this.onBlurAction}
+          onBlur={validateOn === "BLUR" ? () => validateOnBlur(model, value)(dispatch) : undefined}
           />
       </ReactBootstrapField>
     )
