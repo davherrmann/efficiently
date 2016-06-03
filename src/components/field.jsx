@@ -16,12 +16,12 @@ const PREFIX = "clientSideFormData.";
 const withPrefix = (model) => PREFIX + model;
 const withoutPrefix = (model) => model.slice(PREFIX.length);
 
-const validateOnChange = (model, value) => (dispatch) => {
+const dispatchChangeAndValidate = (model, value) => (dispatch) => {
   dispatch(actions.change(model, value));
   dispatch(server(validate(withoutPrefix(model))));
 }
 
-const validateOnBlur = (model, value) => (dispatch) => dispatch(server(validate(model)));
+const dispatchValidate = (model, value) => (dispatch) => dispatch(server(validate(model)));
 
 class EfficientlyField extends Component {
   shouldComponentUpdate(nextProps) {
@@ -37,7 +37,7 @@ class EfficientlyField extends Component {
     return (
       <ReactBootstrapField
         model={withPrefix(model)}
-        changeAction={validateOn === "CHANGE" ? validateOnChange : undefined}
+        changeAction={validateOn === "CHANGE" ? dispatchChangeAndValidate : undefined}
         >
         <Input
           standalone
@@ -48,7 +48,7 @@ class EfficientlyField extends Component {
           wrapperClassName={"col-xs-" + cols.split(',')[1]}
           {...this.props}
           type={type}
-          onBlur={validateOn === "BLUR" ? () => validateOnBlur(model, value)(dispatch) : undefined}
+          onBlur={validateOn === "BLUR" ? () => dispatchValidate(model, value)(dispatch) : undefined}
           />
       </ReactBootstrapField>
     )
