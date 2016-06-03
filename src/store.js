@@ -10,23 +10,14 @@ import thunk from 'redux-thunk';
 const logger = createLogger({collapsed: true});
 const modelReducer = createModelReducer('clientSideFormData');
 const formReducer = createFormReducer('clientSideFormMetaData');
-const viewReducer = (state, action) => {
-  if ("initView" === action.type) {
-    return action.view;
-  }
-  return state;
-}
 
 const clientReducers = (state = {}, action) => {
-  let clientState = Immutable(state)
+  const clientState = Immutable(state)
     // .set("user", modelReducer(state.user, action))
-    .set("clientSideFormMetaData", formReducer(state.clientSideFormMetaData, action));
+    .set("clientSideFormMetaData", formReducer(state.clientSideFormMetaData, action))
+    .set("clientSideViewMetaData", action.view);
 
-  if (action.type === "initView") {
-    clientState = Immutable(clientState).set("clientSideViewMetaData", viewReducer(state.clientSideViewMetaData, action));
-  }
-
-  let mergedState = applyNewState(clientState, action);
+  const mergedState = applyNewState(clientState, action);
   return modelReducer(mergedState, action);
 }
 
