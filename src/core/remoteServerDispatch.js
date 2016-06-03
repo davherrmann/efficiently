@@ -29,7 +29,6 @@ const serverDispatch = (store) => next => action => {
     // TODO delete all data which is not hold on server
     delete stateDiff.clientSideFormMetaData;
     delete stateDiff.clientSideViewMetaData;
-    console.log("client diff: " + JSON.stringify(stateDiff));
 
     let data = new FormData();
     data.append('json', JSON.stringify(action));
