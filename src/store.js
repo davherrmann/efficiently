@@ -20,8 +20,11 @@ const viewReducer = (state, action) => {
 const clientReducers = (state = {}, action) => {
   let clientState = Immutable(state)
     // .set("user", modelReducer(state.user, action))
-    .set("clientSideFormMetaData", formReducer(state.clientSideFormMetaData, action))
-    .set("clientSideViewMetaData", viewReducer(state.clientSideViewMetaData, action));
+    .set("clientSideFormMetaData", formReducer(state.clientSideFormMetaData, action));
+
+  if (action.type === "initView") {
+    clientState = Immutable(clientState).set("clientSideViewMetaData", viewReducer(state.clientSideViewMetaData, action));
+  }
 
   let mergedState = applyNewState(clientState, action);
   return modelReducer(mergedState, action);
