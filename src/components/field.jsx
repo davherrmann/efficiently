@@ -45,7 +45,7 @@ class EfficientlyField extends Component {
         <Input
           standalone
           hasFeedback
-          bsStyle={field.touched && (!field.valid || valid === false) ? "error" : field.touched ? "success" : null}
+          bsStyle={(field.touched || field.focus) && (!field.valid || valid === false) ? "error" : field.touched ? "success" : null}
           help={helpText ? helpText : null}
           labelClassName={"col-xs-" + cols.split(',')[0]}
           wrapperClassName={"col-xs-" + cols.split(',')[1]}
