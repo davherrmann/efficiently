@@ -13,7 +13,7 @@ const ReactBootstrapField = createFieldClass({
 });
 
 class EfficientlyField extends Component {
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     // return Object.keys(new Differ().diff(this.props, nextProps)).length > 0;
     return this.props != nextProps;
   }
@@ -24,13 +24,12 @@ class EfficientlyField extends Component {
     let helpText = field.touched && error ? helpText + " " + error : helpText;
 
     this.changeAction = this.changeAction || (validateOn && validateOn.toLowerCase() === "change"
-      ? (extendedModel, value) => (dispatch) => {
-          dispatch(actions.change("clientSideFormData." + model + ".value", value));
-          dispatch(server(validate(model)));
+      ? (model, value) => (dispatch) => {
+          const nestedModel = model.slice("clientSideFormData.".length);
+          dispatch(actions.change("clientSideFormData." + nestedModel, value));
+          dispatch(server(validate(nestedModel)));
         }
-      : (extendedModel, value) => (dispatch) => {
-          dispatch(actions.change("clientSideFormData." + model + ".value", value));
-        });
+      : undefined);
 
     this.onBlurAction = this.onBlurAction || (validateOn && validateOn.toLowerCase() === "blur"
       ? () => dispatch(server(validate(model)))
@@ -39,7 +38,7 @@ class EfficientlyField extends Component {
     // TODO use validateOn, don't always send server(validate(...)) on change!
     return (
       <ReactBootstrapField
-        model={"clientSideFormMetaData." + model}
+        model={"clientSideFormData." + model}
         changeAction={this.changeAction}
         >
         <Input

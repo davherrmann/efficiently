@@ -12,6 +12,10 @@ function isArray(obj) {
   return {}.toString.apply(obj) === '[object Array]';
 }
 
+function Empty(props) {
+  return <div>PLEASE IMPLEMENT</div>
+}
+
 class View extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     return nextProps.ready != undefined
@@ -76,9 +80,8 @@ class View extends Component {
       // TODO allow "middleware" for component creation
       if (path.slice(-1)[0] === "value") {
         const source = derivationWrapper.sourceValue;
-        const model = source.substr(0, source.length - ".value".length);
-        const field = model && getField(state.clientSideFormMetaData, model.split('.').slice(0, 2).join('.')) || {};
-        mappedProps["model"] = model;
+        const field = source && getField(state.clientSideFormMetaData, source) || {};
+        mappedProps["model"] = source;
         mappedProps["field"] = field;
       }
     }
