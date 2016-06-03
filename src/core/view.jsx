@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Assistant, Button, Dialog, Refresher, States, FormGroup, Form, Field, Table} from '../components';
+import {Alert} from 'react-bootstrap';
 import {server, anyAction} from '../actions';
 import { getField } from 'react-redux-form';
 
@@ -12,9 +13,11 @@ function isArray(obj) {
   return {}.toString.apply(obj) === '[object Array]';
 }
 
-function Empty(props) {
-  return <div>PLEASE IMPLEMENT</div>
-}
+const EmptyComponent = (props) => () => (
+  <Alert bsStyle="danger">
+    <strong>No component found for &lt;{props.type}&gt;!</strong> Please check your registered components.
+  </Alert>
+)
 
 class View extends Component {
   shouldComponentUpdate(nextProps, nextState) {
@@ -25,7 +28,7 @@ class View extends Component {
 
   // TODO separate registry
   componentMapping(name) {
-    return {
+    const components = {
       "Assistant": Assistant,
       "Button": Button,
       "input": "input",
@@ -36,8 +39,10 @@ class View extends Component {
       "Form": Form,
       "FormGroup": FormGroup,
       "Field": Field,
-      "Table": Table
-    }[name] || this.props.components[name] || "div";
+      "Table": Table,
+      "Panel": "div"
+    };
+    return components[name] || this.props.components[name] || EmptyComponent({type: name});
   }
 
   derivedValue(value, derivationName) {
