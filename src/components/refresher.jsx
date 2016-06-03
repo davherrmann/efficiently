@@ -43,4 +43,4 @@ class Refresher extends Component {
   }
 }
 
-export default connect()(Refresher);
+export default Refresher;

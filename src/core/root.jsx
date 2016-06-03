@@ -2,6 +2,7 @@ import React from 'react';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux';
 import {createStore} from '../store';
+import {whyDidYouUpdate} from 'why-did-you-update'
 
 import Loader from './loader';
 import View from './view';
@@ -9,7 +10,10 @@ import View from './view';
 // actions
 import {server, initState, initView} from '../actions';
 
-export function initEfficiently(reactElement, ContentComponent, serverDispatch, components, derivations) {
+export function initEfficiently(reactElement, serverDispatch, components, derivations) {
+  if (process.env.NODE_ENV !== 'production') {
+    whyDidYouUpdate(React, { exclude: [ /^Connect/, /^Field/, /^FormGroup/, /^Input/ ] })
+  }
 
   const store = createStore(serverDispatch);
   store.dispatch(server(initState()));
@@ -20,7 +24,7 @@ export function initEfficiently(reactElement, ContentComponent, serverDispatch, 
 
   render(
     <Provider store={store}>
-      <View components={components} derivations={derivations}/>
+      <View components={components} derivations={derivations} store={store}/>
     </Provider>,
     reactElement
   );
@@ -56,7 +60,7 @@ class Efficiently {
     this.dispatcher = dispatcher;
   }
 
-  start(mount, rootElement) {
-    initEfficiently(mount, rootElement, this.dispatcher, this.components, this.derivations);
+  start(mount) {
+    initEfficiently(mount, this.dispatcher, this.components, this.derivations);
   }
 }

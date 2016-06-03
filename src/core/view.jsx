@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Assistant, Button, Dialog, Refresher, States, Form, FormGroup, Field, Table} from '../components';
+import {Assistant, Button, Dialog, Refresher, States, FormGroup, Form, Field, Table} from '../components';
 import {server, anyAction} from '../actions';
+import { getField } from 'react-redux-form';
 
 function isObject(obj) {
   return {}.toString.apply(obj) === '[object Object]';
@@ -12,6 +13,11 @@ function isArray(obj) {
 }
 
 class View extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.ready != undefined
+      && nextProps.clientSideViewMetaData != undefined
+      && (this.props.clientSideViewMetaData != nextProps.clientSideViewMetaData || this.props.ready != nextProps.ready);
+  }
 
   // TODO separate registry
   componentMapping(name) {
@@ -64,41 +70,58 @@ class View extends Component {
         ? () => {this.props.dispatch(server(anyAction(sourceValue)))}
         : this.derivedValue(sourceValue, derivationWrapper.name);
 
+      mappedProps["dispatch"] = this.props.dispatch;
+
       // TODO do this on server side?
       // TODO allow "middleware" for component creation
       if (path.slice(-1)[0] === "value") {
         const source = derivationWrapper.sourceValue;
-        mappedProps["model"] = source.substr(0, source.length - ".value".length)
+        const model = source.substr(0, source.length - ".value".length);
+        const field = model && getField(state.clientSideFormMetaData, model.split('.').slice(0, 2).join('.')) || {};
+        mappedProps["model"] = model;
+        mappedProps["field"] = field;
       }
     }
     return mappedProps;
   }
 
   render() {
-    const {state} = this.props;
-    if (!state.clientSideViewMetaData) {
+    const {store, clientSideViewMetaData} = this.props;
+    if (!clientSideViewMetaData) {
       return <div>no view yet</div>
     }
+
+    console.log("rendering view")
+    console.log(clientSideViewMetaData)
+
     // TODO cache the view (only do componentMapping etc. once!)
-    return this.recursiveRender(state, state.clientSideViewMetaData);
+    return this.recursiveRender(store, clientSideViewMetaData);
   }
 
-  recursiveRender(state, view, key) {
+  recursiveRender(store, view, key) {
     let {content, ...props} = view;
-    let Component = this.componentMapping(view.type);
-    let mappedProps = this.mapProps(state, props);
+    let mapToProps = (s) => {
+      const mappedProps = this.mapProps(s, props);
+      return mappedProps;
+    }
+
+    let Component = connect(mapToProps)(this.componentMapping(view.type));
+    // let mappedProps = this.mapProps(state, props);
 
     let mappedContent = [];
     if (isArray(content)) {
-      content.forEach((component, key) => mappedContent.push(this.recursiveRender(state, component, key)));
+      content.forEach((component, key) => mappedContent.push(this.recursiveRender(store, component, key)));
     } else {
-      mappedContent = (content ? this.pathToStateMapping(state, content.split('.')) : null);
+      mappedContent = (content ? this.pathToStateMapping(store.getState(), content.split('.')) : null);
     }
 
-    return <Component {...mappedProps} key={key}>
+    return <Component key={key}>
       {mappedContent}
     </Component>
   }
 }
 
-export default connect(state => ({state}))(View)
+export default connect(state => ({
+  ready: state.ready,
+  clientSideViewMetaData: state.clientSideViewMetaData
+}))(View)

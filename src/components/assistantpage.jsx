@@ -11,4 +11,4 @@ const AssistantPage = React.createClass({
   }
 });
 
-export default connect()(AssistantPage);
+export default AssistantPage;

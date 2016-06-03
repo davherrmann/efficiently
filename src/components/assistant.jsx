@@ -49,4 +49,4 @@ class Assistant extends Component {
   }
 }
 
-export default connect()(Assistant);
+export default Assistant;

@@ -1,49 +1,46 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Input} from 'react-bootstrap';
-import { getField, createFieldClass, controls, actions } from 'react-redux-form';
+import { createFieldClass, controls, actions } from 'react-redux-form';
 import {validate, server} from '../actions';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import diff from 'seamless-immutable-diff';
+import Differ from '../core/differ';
+import Immutable from 'seamless-immutable';
+import {Input} from 'react-bootstrap';
 
 const ReactBootstrapField = createFieldClass({
   'Input': controls.text
 });
 
-const Field = React.createClass({
-  mixins: [PureRenderMixin],
+class EfficientlyField extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    // return Object.keys(new Differ().diff(this.props, nextProps)).length > 0;
+    return this.props != nextProps;
+  }
 
   render() {
-    let {form, model, cols = "2,4", type = "text", validators = [], state, validateOn, dispatch, valid, error} = this.props;
-    form = form || state && state["clientSideFormMetaData"];
-    let field = model && getField(form, model.split('.').slice(0, 2).join('.')) || {};
+    let {field, model, cols = "2,4", type = "text", validators = [], validateOn, dispatch, valid, error} = this.props;
 
-    let reactReduxValidators = validators.reduce((prev, curr) => {prev[curr.name] = curr.validate; return prev}, {});
-    validateOn ? reactReduxValidators["remoteValidation"] = () => (dispatch(server(validate(model))) || true) : undefined;
+    let helpText = field.touched && error ? helpText + " " + error : helpText;
 
-    let helpText = validators.reduce((prev, curr) => {
-      return prev + ((field.touched && field.errors[curr.name] && (curr.message + " ") || prev))
-    }, "")
-
-    helpText = field.touched && error ? helpText + " " + error : helpText;
-
-    const changeAction = validateOn && validateOn.toLowerCase() === "change"
+    this.changeAction = this.changeAction || (validateOn && validateOn.toLowerCase() === "change"
       ? (extendedModel, value) => (dispatch) => {
           dispatch(actions.change("clientSideFormData." + model + ".value", value));
           dispatch(server(validate(model)));
         }
       : (extendedModel, value) => (dispatch) => {
           dispatch(actions.change("clientSideFormData." + model + ".value", value));
-        };
+        });
 
-    const onBlurAction = validateOn && validateOn.toLowerCase() === "blur"
+    this.onBlurAction = this.onBlurAction || (validateOn && validateOn.toLowerCase() === "blur"
       ? () => dispatch(server(validate(model)))
-      : undefined;
+      : undefined);
 
     // TODO use validateOn, don't always send server(validate(...)) on change!
     return (
       <ReactBootstrapField
         model={"clientSideFormMetaData." + model}
-        changeAction={changeAction}
+        changeAction={this.changeAction}
         >
         <Input
           standalone
@@ -54,11 +51,11 @@ const Field = React.createClass({
           wrapperClassName={"col-xs-" + cols.split(',')[1]}
           {...this.props}
           type={type}
-          onBlur={onBlurAction}
+          onBlur={this.onBlurAction}
           />
       </ReactBootstrapField>
     )
   }
-});
+}
 
-export default connect(state => ({state}))(Field);
+export default EfficientlyField;

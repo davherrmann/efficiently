@@ -44,4 +44,4 @@ class Ewb extends Component {
   }
 }
 
-export default connect()(Ewb);
+export default Ewb;

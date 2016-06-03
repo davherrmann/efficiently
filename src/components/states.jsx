@@ -30,4 +30,4 @@ class States extends Component {
   }
 }
 
-export default connect()(States);
+export default States;

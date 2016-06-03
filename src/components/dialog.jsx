@@ -29,4 +29,4 @@ const Dialog = ({hidden, dispatch, title, children, actions = []}) => (
   </div>
 )
 
-export default connect()(Dialog);
+export default Dialog;

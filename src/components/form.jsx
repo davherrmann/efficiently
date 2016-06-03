@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
-const Field = React.createClass({
+const Form = React.createClass({
   mixins: [PureRenderMixin],
 
   render() {
@@ -14,4 +14,4 @@ const Field = React.createClass({
   }
 });
 
-export default connect()(Field);
+export default Form;
